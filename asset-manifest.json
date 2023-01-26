@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "/react_project/static/css/main.4e775bbc.css",
+    "main.js": "/react_project/static/js/main.c1f13c39.js",
+    "static/js/787.a2bf511c.chunk.js": "/react_project/static/js/787.a2bf511c.chunk.js",
+    "static/media/NanumGothic-Regular.ttf": "/react_project/static/media/NanumGothic-Regular.6c84540de7730f833d6c.ttf",
+    "index.html": "/react_project/index.html",
+    "main.4e775bbc.css.map": "/react_project/static/css/main.4e775bbc.css.map",
+    "main.c1f13c39.js.map": "/react_project/static/js/main.c1f13c39.js.map",
+    "787.a2bf511c.chunk.js.map": "/react_project/static/js/787.a2bf511c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4e775bbc.css",
+    "static/js/main.c1f13c39.js"
+  ]
+}
