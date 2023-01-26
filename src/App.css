@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "Nanum Gothic Regular";
+  src: url("./fonts/NanumGothic-Regular.ttf");
+}
+
+* {
+  font-family: 'Nanum Gothic Regular', 'sans-serif';
+}
+
+.App {
+  display: block;
+}
