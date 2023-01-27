@@ -1,16 +1,18 @@
 {
   "files": {
-    "main.css": "/react_project/static/css/main.4a23c580.css",
-    "main.js": "/react_project/static/js/main.bfbb0a24.js",
+    "main.css": "/react_project/static/css/main.d512627f.css",
+    "main.js": "/react_project/static/js/main.8fed79b6.js",
     "static/js/787.a2bf511c.chunk.js": "/react_project/static/js/787.a2bf511c.chunk.js",
     "static/media/NanumGothic-Regular.ttf": "/react_project/static/media/NanumGothic-Regular.6c84540de7730f833d6c.ttf",
+    "static/media/SpoqaHanSansNeo-Regular.ttf": "/react_project/static/media/SpoqaHanSansNeo-Regular.b935041cbcc86b551721.ttf",
+    "static/media/SpoqaHanSansNeo-Bold.ttf": "/react_project/static/media/SpoqaHanSansNeo-Bold.9a610369db9d3c28b99f.ttf",
     "index.html": "/react_project/index.html",
-    "main.4a23c580.css.map": "/react_project/static/css/main.4a23c580.css.map",
-    "main.bfbb0a24.js.map": "/react_project/static/js/main.bfbb0a24.js.map",
+    "main.d512627f.css.map": "/react_project/static/css/main.d512627f.css.map",
+    "main.8fed79b6.js.map": "/react_project/static/js/main.8fed79b6.js.map",
     "787.a2bf511c.chunk.js.map": "/react_project/static/js/787.a2bf511c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4a23c580.css",
-    "static/js/main.bfbb0a24.js"
+    "static/css/main.d512627f.css",
+    "static/js/main.8fed79b6.js"
   ]
 }
