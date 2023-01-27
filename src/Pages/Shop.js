@@ -53,7 +53,7 @@ const ProductSheet = styled.div `
   flex-wrap: wrap;
   justify-content: space-between;
   margin: 0 auto;
-  margin-bottom: 150px;
+  margin-bottom: 128px;
 `
 
 const ProductUnit = styled.div `
@@ -136,7 +136,6 @@ const ProductPriceBox = styled.div `
   line-height: 40px;
   user-select: none;
 `
-
 const ProductPrice = styled.div `width: 100%; height: 100%;`
 
 function GetProductPrice(props) {
@@ -177,20 +176,274 @@ function GetProductPrice(props) {
 
 
 
-
-
-
-const ProbabilityBox = styled.div `
+const ProbabilityOuterBox = styled.div `
   width: 1070px;
-  height: 238px;
+  height: 262px;
   margin: 0 auto;
 `
-
-const ProbabilityTable = styled.div `
+const ProbabilityInnerBox = styled.div `
   width: 530px;
-  height: 238px;
-  background-color: #ccc;
+  height: 262px;
 `
+const ProbabilityTitle = styled.div `
+  width: 100%;
+  height: 20px;
+  font-size: 14px;
+  color: #C4C4C4;
+  text-indent: 5px;
+  margin-bottom: 32px;
+`
+const ProbabilityTable = styled.div `
+  display: flex;
+  width: 100%;
+  height: 210px;
+`
+const ProbTableLeftArea = styled.div `
+  width: 110px;
+  height: 100%;
+`
+const TableCategoryUnit = styled.div `width: 100%; height: 30px; font-size: 14px; color: #fff; line-height: 30px;`
+const TableCategoryUnit01 = styled(TableCategoryUnit) `color: #EF63E1; text-shadow: rgba(205, 212, 239, 0.25) 1px 0 10px;`
+const TableCategoryUnit02 = styled(TableCategoryUnit) `color: #F9DCB0; text-shadow: rgba(184, 127, 233, 0.5) 1px 0 10px;`
+const TableCategoryUnit03 = styled(TableCategoryUnit) `color: #C1C7F1; text-shadow: rgba(138, 154, 55, 0.4) 1px 0 10px;`
+const TableCategoryUnit04 = styled(TableCategoryUnit) `color: #DCCB5E;`
+const TableCategoryUnit05 = styled(TableCategoryUnit) `color: #6CC87B;`
+const TableCategoryUnit06 = styled(TableCategoryUnit) `color: #fff;`
+
+const probabilityCategoryData = ["Epic Box", "Legend Box", "Unique Box", "SuperRare Box", "Rare Box", "Normal Box"];
+
+function GetProbCategory(props) {
+  const {tableCategories, index} = props
+
+  switch(index) {
+    case 0:
+      return <>
+              <TableCategoryUnit01></TableCategoryUnit01>
+              <TableCategoryUnit01 className="spoqa_bold">{tableCategories[index]}</TableCategoryUnit01>
+            </>
+    case 1:
+      return <TableCategoryUnit02 className="spoqa_bold">{tableCategories[index]}</TableCategoryUnit02>
+    case 2:
+      return <TableCategoryUnit03 className="spoqa_bold">{tableCategories[index]}</TableCategoryUnit03>
+    case 3:
+      return <TableCategoryUnit04>{tableCategories[index]}</TableCategoryUnit04>
+    case 4:
+      return <TableCategoryUnit05>{tableCategories[index]}</TableCategoryUnit05>
+    case 5:
+      return <TableCategoryUnit06>{tableCategories[index]}</TableCategoryUnit06>
+  }
+}
+
+
+
+
+
+const ProbTableRightArea = styled.div `
+  width: calc(100% - 110px);
+  text-align: center;
+`
+
+const ProbabilityTableRow = styled.div `width: 100%; height: 30px; line-height: 30px; display: flex;`
+
+const TableUnitName = styled.div `font-size: 14px;`
+
+const TableUnitName01 = styled(TableUnitName) `width: 65px; color: #EF63E1; text-shadow: rgba(205, 212, 239, 0.25) 1px 0 10px;`
+const TableUnitName02 = styled(TableUnitName) `width: 70px; color: #F9DCB0; text-shadow: rgba(184, 127, 233, 0.5) 1px 0 10px;`
+const TableUnitName03 = styled(TableUnitName) `width: 64px; color: #C1C7F1; text-shadow: rgba(138, 154, 55, 0.4) 1px 0 10px;`
+const TableUnitName04 = styled(TableUnitName) `width: 100px; color: #DCCB5E;`
+const TableUnitName05 = styled(TableUnitName) `width: 53px; color: #6CC87B;`
+const TableUnitName06 = styled(TableUnitName) `width: 68px; color: #fff;`
+
+const TableUnitValue = styled.div `font-size: 13px;`
+
+const TableUnitValue01 = styled(TableUnitValue) `width: 65px;`
+const TableUnitValue02 = styled(TableUnitValue) `width: 70px;`
+const TableUnitValue03 = styled(TableUnitValue) `width: 64px;`
+const TableUnitValue04 = styled(TableUnitValue) `width: 100px;`
+const TableUnitValue05 = styled(TableUnitValue) `width: 53px;`
+const TableUnitValue06 = styled(TableUnitValue) `width: 68px;`
+
+const probabilityData = [
+  {"category": ["Epic", "Legend", "Unique", "Super Rare", "Rare", "Normal"]},
+  {"epicBox": [10, 15, 20, 20, 20, 15]},
+  {"legendBox": [3, 10, 15, 15, 15, 42]},
+  {"uniqueBox": [0.5, 3, 10, 15, 15, 56.5]},
+  {"superRareBox": [0.3, 1.5, 3, 15, 10, 70.2]},
+  {"rareBox": [0.2, 0.8, 1.5, 4, 10, 83.5]},
+  {"normalBox": [0.1, 0.5, 1, 2, 5, 91.4]}
+]
+
+function GetTableUnit(props) {
+  const {tableUnits, index} = props;
+  
+  switch(index) {
+    case 0:
+      return <ProbabilityTableRow>
+              {
+                tableUnits[0]["category"].map((categoryUnit, indexP) => {
+                  switch(indexP) {
+                    case 0:
+                      return <TableUnitName01 key={indexP}>{categoryUnit}</TableUnitName01>
+                    case 1:
+                      return <TableUnitName02 key={indexP}>{categoryUnit}</TableUnitName02>
+                    case 2:
+                      return <TableUnitName03 key={indexP}>{categoryUnit}</TableUnitName03>
+                    case 3:
+                      return <TableUnitName04 key={indexP}>{categoryUnit}</TableUnitName04>
+                    case 4:
+                      return <TableUnitName05 key={indexP}>{categoryUnit}</TableUnitName05>
+                    case 5:
+                      return <TableUnitName06 key={indexP}>{categoryUnit}</TableUnitName06>
+                    default:
+                      return <TableUnitName06 key={indexP}>{categoryUnit}</TableUnitName06>
+                  }
+                })
+              }
+            </ProbabilityTableRow>
+        case 1:
+          return <ProbabilityTableRow>
+                  {
+                    tableUnits[1]["epicBox"].map((categoryUnit, indexP) => {
+                      switch(indexP) {
+                        case 0:
+                          return <TableUnitValue01 key={indexP}>{categoryUnit}%</TableUnitValue01>
+                        case 1:
+                          return <TableUnitValue02 key={indexP}>{categoryUnit}%</TableUnitValue02>
+                        case 2:
+                          return <TableUnitValue03 key={indexP}>{categoryUnit}%</TableUnitValue03>
+                        case 3:
+                          return <TableUnitValue04 key={indexP}>{categoryUnit}%</TableUnitValue04>
+                        case 4:
+                          return <TableUnitValue05 key={indexP}>{categoryUnit}%</TableUnitValue05>
+                        case 5:
+                          return <TableUnitValue06 key={indexP}>{categoryUnit}%</TableUnitValue06>
+                        default:
+                          return <TableUnitValue06 key={indexP}>{categoryUnit}%</TableUnitValue06>
+                      }
+                    })
+                  }
+                </ProbabilityTableRow>
+        case 2:
+          return <ProbabilityTableRow>
+                  {
+                    tableUnits[2]["legendBox"].map((categoryUnit, indexP) => {
+                      switch(indexP) {
+                        case 0:
+                          return <TableUnitValue01 key={indexP}>{categoryUnit}%</TableUnitValue01>
+                        case 1:
+                          return <TableUnitValue02 key={indexP}>{categoryUnit}%</TableUnitValue02>
+                        case 2:
+                          return <TableUnitValue03 key={indexP}>{categoryUnit}%</TableUnitValue03>
+                        case 3:
+                          return <TableUnitValue04 key={indexP}>{categoryUnit}%</TableUnitValue04>
+                        case 4:
+                          return <TableUnitValue05 key={indexP}>{categoryUnit}%</TableUnitValue05>
+                        case 5:
+                          return <TableUnitValue06 key={indexP}>{categoryUnit}%</TableUnitValue06>
+                        default:
+                          return <TableUnitValue06 key={indexP}>{categoryUnit}%</TableUnitValue06>
+                      }
+                    })
+                  }
+                </ProbabilityTableRow>
+        case 3:
+          return <ProbabilityTableRow>
+                  {
+                    tableUnits[3]["uniqueBox"].map((categoryUnit, indexP) => {
+                      switch(indexP) {
+                        case 0:
+                          return <TableUnitValue01 key={indexP}>{categoryUnit}%</TableUnitValue01>
+                        case 1:
+                          return <TableUnitValue02 key={indexP}>{categoryUnit}%</TableUnitValue02>
+                        case 2:
+                          return <TableUnitValue03 key={indexP}>{categoryUnit}%</TableUnitValue03>
+                        case 3:
+                          return <TableUnitValue04 key={indexP}>{categoryUnit}%</TableUnitValue04>
+                        case 4:
+                          return <TableUnitValue05 key={indexP}>{categoryUnit}%</TableUnitValue05>
+                        case 5:
+                          return <TableUnitValue06 key={indexP}>{categoryUnit}%</TableUnitValue06>
+                        default:
+                          return <TableUnitValue06 key={indexP}>{categoryUnit}%</TableUnitValue06>
+                      }
+                    })
+                  }
+                </ProbabilityTableRow>
+        case 4:
+          return <ProbabilityTableRow>
+                  {
+                    tableUnits[4]["superRareBox"].map((categoryUnit, indexP) => {
+                      switch(indexP) {
+                        case 0:
+                          return <TableUnitValue01 key={indexP}>{categoryUnit}%</TableUnitValue01>
+                        case 1:
+                          return <TableUnitValue02 key={indexP}>{categoryUnit}%</TableUnitValue02>
+                        case 2:
+                          return <TableUnitValue03 key={indexP}>{categoryUnit}%</TableUnitValue03>
+                        case 3:
+                          return <TableUnitValue04 key={indexP}>{categoryUnit}%</TableUnitValue04>
+                        case 4:
+                          return <TableUnitValue05 key={indexP}>{categoryUnit}%</TableUnitValue05>
+                        case 5:
+                          return <TableUnitValue06 key={indexP}>{categoryUnit}%</TableUnitValue06>
+                        default:
+                          return <TableUnitValue06 key={indexP}>{categoryUnit}%</TableUnitValue06>
+                      }
+                    })
+                  }
+                </ProbabilityTableRow>
+        case 5:
+          return <ProbabilityTableRow>
+                  {
+                    tableUnits[5]["rareBox"].map((categoryUnit, indexP) => {
+                      switch(indexP) {
+                        case 0:
+                          return <TableUnitValue01 key={indexP}>{categoryUnit}%</TableUnitValue01>
+                        case 1:
+                          return <TableUnitValue02 key={indexP}>{categoryUnit}%</TableUnitValue02>
+                        case 2:
+                          return <TableUnitValue03 key={indexP}>{categoryUnit}%</TableUnitValue03>
+                        case 3:
+                          return <TableUnitValue04 key={indexP}>{categoryUnit}%</TableUnitValue04>
+                        case 4:
+                          return <TableUnitValue05 key={indexP}>{categoryUnit}%</TableUnitValue05>
+                        case 5:
+                          return <TableUnitValue06 key={indexP}>{categoryUnit}%</TableUnitValue06>
+                        default:
+                          return <TableUnitValue06 key={indexP}>{categoryUnit}%</TableUnitValue06>
+                      }
+                    })
+                  }
+                </ProbabilityTableRow>
+        case 6:
+          return <ProbabilityTableRow>
+                  {
+                    tableUnits[6]["normalBox"].map((categoryUnit, indexP) => {
+                      switch(indexP) {
+                        case 0:
+                          return <TableUnitValue01 key={indexP}>{categoryUnit}%</TableUnitValue01>
+                        case 1:
+                          return <TableUnitValue02 key={indexP}>{categoryUnit}%</TableUnitValue02>
+                        case 2:
+                          return <TableUnitValue03 key={indexP}>{categoryUnit}%</TableUnitValue03>
+                        case 3:
+                          return <TableUnitValue04 key={indexP}>{categoryUnit}%</TableUnitValue04>
+                        case 4:
+                          return <TableUnitValue05 key={indexP}>{categoryUnit}%</TableUnitValue05>
+                        case 5:
+                          return <TableUnitValue06 key={indexP}>{categoryUnit}%</TableUnitValue06>
+                        default:
+                          return <TableUnitValue06 key={indexP}>{categoryUnit}%</TableUnitValue06>
+                      }
+                    })
+                  }
+                </ProbabilityTableRow>
+    default:
+      return <ProbabilityTableRow>데이터 로드 실패</ProbabilityTableRow>
+  }
+}
+
+
 
 
 
@@ -204,6 +457,8 @@ const ProbabilityTable = styled.div `
 export default function Shop() {
 
   const [products] = useState(data)
+  const [tableCategories] = useState(probabilityCategoryData)
+  const [tableUnits] = useState(probabilityData)
 
   return (
     <>
@@ -220,26 +475,50 @@ export default function Shop() {
                     <ProductImageBox>
                       <GetProductShape products={products} index={index} />
                     </ProductImageBox>
-
                     <ProductNameBox>
                       <GetProductName products={products} index={index} />
                     </ProductNameBox>
-
                     <ProductPriceBox>
                       <GetProductPrice products={products} index={index} />
                     </ProductPriceBox>
-
                   </ProductUnit>
                 )
               })
             }
           </ProductSheet>
 
-          <ProbabilityBox>
-            <ProbabilityTable>
-              probability
-            </ProbabilityTable>
-          </ProbabilityBox>
+          <ProbabilityOuterBox>
+            <ProbabilityInnerBox>
+              <ProbabilityTitle className="spoqa_bold">* Probability per Box</ProbabilityTitle>
+
+              <ProbabilityTable>
+                <ProbTableLeftArea>
+                  {
+                    tableCategories.map((tableCategory, index) => {
+                      return (
+                        <div key={index}>
+                          <GetProbCategory tableCategories={tableCategories} index={index} />
+                        </div>
+                      )
+                    })
+                  }
+                </ProbTableLeftArea>
+
+                <ProbTableRightArea>
+                  {
+                    tableUnits.map((tableUnit, index) => {
+                      return (
+                        <div key={index}>
+                          <GetTableUnit tableUnits={tableUnits} index={index} />
+                        </div>
+                      )
+                    })
+                  }
+                </ProbTableRightArea>
+              </ProbabilityTable>
+
+            </ProbabilityInnerBox>
+          </ProbabilityOuterBox>
 
         </ShopContents>
       </ShopSection>
