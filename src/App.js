@@ -107,7 +107,7 @@ function App() {
               </div>
             </div>
             <div className='copyright'>
-              © 2023 Atlasia. All rights reserved.
+              © 2023 Atlasia. All rights reservedd.
             </div>
           </div>
 
