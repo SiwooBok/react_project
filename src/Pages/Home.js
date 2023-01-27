@@ -1,19 +1,22 @@
 import styled, { keyframes } from "styled-components";
+import { useNavigate } from 'react-router-dom';
+
 
 const VisualMain = styled.section `
   width: 100%;
-  height: 760px;
+  height: 820px;
   position: relative;
   overflow: hidden;
   background-image: url(${(props) => props.targetImg});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  user-select: none;
 `
 const VisualBrightnessBox = styled.div `
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.55);
+  background-color: rgba(35, 35, 35, 0.55);
   position: absolute;
   top: 0;
   left: 0;
@@ -28,10 +31,10 @@ const VisualTextBox = styled.div `
   position: relative;
   z-index: 2;
 `
-const TextWelcome = styled.div `font-size: 32px; position: absolute; top: 170px; left: 370px;`
-const TextbigD = styled.div `font-size: 350px; position: absolute; top: 160px; left: 605px;`
-const TextRagon = styled.div `position: absolute; top: 430px; left: 820px;`
-const TextWorld = styled.div `position: absolute; top: 510px; left: 860px;`
+const TextWelcome = styled.div `font-size: 32px; position: absolute; top: 220px; left: 370px;`
+const TextbigD = styled.div `font-size: 350px; position: absolute; top: 210px; left: 605px;`
+const TextRagon = styled.div `position: absolute; top: 480px; left: 820px;`
+const TextWorld = styled.div `position: absolute; top: 560px; left: 860px;`
 
 
 
@@ -44,6 +47,7 @@ const Description = styled.section `
   position: relative;
   overflow: hidden;
   background-color: #D6D6D6;
+  cursor: default;
 `
 const DescriptionTitle = styled.div `
   width: 1070px;
@@ -96,6 +100,7 @@ const Promotion = styled.section `
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
+  cursor: default;
 `
 const PromotionTitle = styled.div `
   width: 1070px;
@@ -117,11 +122,14 @@ const PromotionSheet = styled.div `
   margin: 0 auto;
   margin-bottom: 55px;
 `
-const PromotionUnit01 = styled.div `width: 340px;`
-const PromotionUnit02 = styled.div `width: 340px;`
-const PromotionUnit03 = styled.div `width: 340px;`
 
-const CharImageBox01 = styled.div `
+const PromotionUnit = styled.div `width: 340px;`
+
+const PromotionUnit01 = styled(PromotionUnit) `display: block;`
+const PromotionUnit02 = styled(PromotionUnit) `display: block;`
+const PromotionUnit03 = styled(PromotionUnit) `display: block;`
+
+const CharImageBox = styled.div `
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,31 +139,20 @@ const CharImageBox01 = styled.div `
   border-radius: 20px;
   box-sizing: border-box;
 `
-const CharImage01 = styled.img `display: block; width: 70%;`
-const CharName01 = styled.div `width: 100%; height: 112px; text-align: center; line-height: 112px;`
+const CharImage = styled.img `display:block; width: 70%;`
+const CharName = styled.div `width: 100%; height: 112px; text-align: center; line-height: 112px;`
 
-const CharImageBox02 = styled.div `
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 340px;
-  height: 340px;
-  border: 1px solid #DCB7B7;
-  border-radius: 20px;
-  box-sizing: border-box;
-`
-const CharImage02 = styled.img `display: block; width: 70%;`
-const CharName02 = styled.div `width: 100%; height: 112px; text-align: center; line-height: 112px;`
+const CharImageBox01 = styled(CharImageBox) `width: 340px;`
+const CharImage01 = styled(CharImage) `width: 70%;`
+const CharName01 = styled(CharName) `width: 100%;`
 
-const CharImageBox03 = styled.div `
-  width: 340px;
-  height: 340px;
-  border: 1px solid #DCB7B7;
-  border-radius: 20px;
-  box-sizing: border-box;
-`
-const CharImage03 = styled.img ` display: block; width: 100%; transform: translate(0, 30px);`
-const CharName03 = styled.div `width: 100%; height: 112px; text-align: center; line-height: 112px;`
+const CharImageBox02 = styled(CharImageBox) `width: 340px;`
+const CharImage02 = styled(CharImage) `width: 70%;`
+const CharName02 = styled(CharName) `width: 100%;`
+
+const CharImageBox03 = styled(CharImageBox) `width: 340px;`
+const CharImage03 = styled(CharImage) `width: 100%; transform: translate(0, 30px);`
+const CharName03 = styled(CharName) `width: 100%;`
 
 const PromotionBtn = styled.button `
   display: block;
@@ -172,7 +169,6 @@ const PromotionBtn = styled.button `
   margin: 0 auto;
   cursor: pointer;
 `
-
 
 
 
@@ -225,9 +221,40 @@ const EventIcon = styled.div `
   position: absolute;
   top: 100px;
   right: 90px;
+  cursor: pointer;
 `
-const EventImgBox = styled.div `width: 196px; height: 196px;`
-const EventImg = styled.img `display: block; width: 100%;`
+const EventImgBox = styled.div `width: 196px; height: 196px; position: relative; perspective: 300px;`
+
+const rotateFront = keyframes `
+  0% {transform: rotateY(0);}
+  20% {transform: rotateY(0);}
+  80% {transform: rotateY(360deg);}
+  100% {transform: rotateY(360deg);}
+`
+const rotateBack = keyframes `
+  0% {transform: rotateY(180deg);}
+  20% {transform: rotateY(180deg);}
+  80% {transform: rotateY(540deg);}
+  100% {transform: rotateY(540deg);}
+`
+
+const Coin = styled.img `
+  display: block;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+`
+const CoinFront = styled(Coin) `
+  transform: rotateY(0);
+  animation: 5s infinite ${rotateFront} ease-in-out;
+`
+const CoinBack = styled(Coin) `
+  transform: rotateY(180deg);
+  animation: 5s infinite ${rotateBack} ease-in-out;
+`
+
 const EventIconText = styled.div `
   width: 100%;
   height: 33px;
@@ -241,6 +268,9 @@ const EventIconText = styled.div `
 
 
 export default function Home() {
+
+  const navigate = useNavigate()
+
   return (
     <>
       <VisualMain targetImg={process.env.PUBLIC_URL+ '/images/visual_main.jpg'}>
@@ -289,7 +319,7 @@ export default function Home() {
             <CharName03>Draco</CharName03>
           </PromotionUnit03>
         </PromotionSheet>
-        <PromotionBtn>Go Shopping</PromotionBtn>
+        <PromotionBtn onClick={()=>{navigate('/shop')}}>Go Shopping</PromotionBtn>
       </Promotion>
 
       <EventOuterBox>
@@ -297,9 +327,10 @@ export default function Home() {
         <EventBrightnessBox />
         <Event>
           <EventText>Recharge your Coin<br/>for this week's "Special Discount Event"</EventText>
-            <EventIcon>
+            <EventIcon onClick={()=>{navigate('/shop')}}>
               <EventImgBox>
-                <EventImg src={process.env.PUBLIC_URL+ '/images/coin.png'} />
+                <CoinFront src={process.env.PUBLIC_URL+ '/images/coin.png'} />
+                <CoinBack src={process.env.PUBLIC_URL+ '/images/coin.png'} />
               </EventImgBox>
             <EventIconText>33% discount!</EventIconText>
           </EventIcon>

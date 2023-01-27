@@ -56,8 +56,9 @@ function App() {
 
       <Routes>
         <Route path='/' element={<Home/>} />
+        <Route path='react_project' element={<Home/>} />
         <Route path='about' element={<About />} />
-        <Route path='shop/*' element={<Shop />} />
+        <Route path='shop' element={<Shop />} />
         <Route path='cart' element={<Cart />} />
       </Routes>
 

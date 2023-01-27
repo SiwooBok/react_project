@@ -18,8 +18,14 @@ a {
   width: 100%;
 
   .header_box {
-    background-color: #fff;
-    border-bottom: 1px solid #ccc;
+    width: 100%;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
 
     .header {
       display: flex;
@@ -31,13 +37,13 @@ a {
         justify-content: center;
         width: 200px;
         height: 60px;
-        color: #111;
+        color: #fff;
         margin-right: 30px;
         cursor: pointer;
         transition: all .3s;
 
         &:hover {
-          color: orange;
+          color: skyblue;
         }
   
         .icon {
@@ -76,7 +82,8 @@ a {
           display: flex;
           li {
             width: 25%;
-            .main_menu {display: block; color: #111;}
+            .main_menu {display: block; color: #fff; transition: all .3s;}
+            .main_menu:hover {color: skyblue;}
           }
         }
   
@@ -87,7 +94,8 @@ a {
             width: 32%;
             &:nth-child(1) { width: 18%; }
             &:nth-child(2) { width: 18%; }
-            .sub_menu {display: block; color: #111;}
+            .sub_menu {display: block; color: #fff; transition: all .3s;}
+            .sub_menu:hover {color: skyblue;}
           }
         }
       }
@@ -147,10 +155,8 @@ a {
             height: 55px;
             text-align: center;
             line-height: 55px;
-            .footer_menu {
-              display: block;
-              color: #111;
-            }
+            .footer_menu {display: block; color: #111; transition: all .3s;}
+            .footer_menu:hover {color: rgb(143, 109, 44);}
           }
         }
       }
@@ -166,10 +172,8 @@ a {
           width: 220px;
           height: 56px;
           line-height: 56px;
-          .icon {
-            width: 20%;
-            cursor: pointer;
-          }
+          .icon {width: 20%; color: #111; cursor: pointer; transition: all .3s;}
+          .icon:hover {color: rgb(143, 109, 44);}
         }
         .copyright {
           width: 100%;

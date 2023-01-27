@@ -10,8 +10,10 @@ const AboutSection = styled.section `
 
 export default function About() {
   return (
-    <AboutSection>
-      About
-    </AboutSection>
+    <>
+      <AboutSection>
+        About
+      </AboutSection>
+    </>
   )
 }
