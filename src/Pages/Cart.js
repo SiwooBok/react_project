@@ -20,7 +20,7 @@ const CartBrightnessBox = styled.div `
   top: 0;
   left: 0;
   z-index: 1;
-  background-color: rgba(35, 35, 35, 0.35);
+  background-color: rgba(35, 35, 35, 0.4);
 `
 
 const CartContents = styled.div `
@@ -73,7 +73,7 @@ export default function Cart() {
       <CartSection targetImg={process.env.PUBLIC_URL+ '/images/sub_background.jpg'}>
         <CartBrightnessBox />
         <CartContents>
-          <CartTitle>Cart</CartTitle>
+          <CartTitle className="spoqa">Cart</CartTitle>
 
           <CartSheet>
 

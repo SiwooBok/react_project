@@ -3,8 +3,26 @@
   src: url("./fonts/NanumGothic-Regular.ttf");
 }
 
-* {
+@font-face {
+  font-family: "Spoqa Han Sans Neo";
+  src: url("./fonts/SpoqaHanSansNeo-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Spoqa Han Sans Neo Bold";
+  src: url("./fonts/SpoqaHanSansNeo-Bold.ttf");
+}
+
+body {
   font-family: 'Nanum Gothic Regular', 'sans-serif';
+}
+
+.spoqa {
+  font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+}
+
+.spoqa_bold {
+  font-family: 'Spoqa Han Sans Neo Bold', 'sans-serif';
 }
 
 .App {

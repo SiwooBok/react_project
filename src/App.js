@@ -9,8 +9,10 @@ import Home from './Pages/Home';
 import About from './Pages/About';
 import Shop from './Pages/Shop';
 import Cart from './Pages/Cart';
+import NotFound from './Pages/NotFound';
 
-import './Pages/style.scss';
+import './Styles/style.scss';
+import GlobalStyle from './Styles/GlobalStyle';
 
 function App() {
 
@@ -18,6 +20,7 @@ function App() {
 
   return (
     <div className="App">
+      <GlobalStyle />
       <div className='header_box'>
         <header className="header">
           <div className="logo" onClick={()=>{navigate('/')}}>
@@ -38,17 +41,17 @@ function App() {
             </ul>
             <ul className='menu_right'>
               <li className='home'>
-                <Link to='/shop' className='sub_menu'>
+                <Link to='/notfound' className='sub_menu'>
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </Link>
               </li>
               <li className='about'>
-                <Link to='/shop' className='sub_menu'>
+                <Link to='/notfound' className='sub_menu'>
                   <FontAwesomeIcon icon={faHeadset} />
                 </Link>
               </li>
-              <li className='shop'><Link to='/cart' className='sub_menu'>SIGN IN</Link></li>
-              <li className='cart'><Link to='/cart' className='sub_menu'>SIGN UP</Link></li>
+              <li className='shop'><Link to='/notfound' className='sub_menu'>SIGN IN</Link></li>
+              <li className='cart'><Link to='/shop' className='sub_menu'>SIGN UP</Link></li>
             </ul>
           </div>
         </header>
@@ -59,6 +62,7 @@ function App() {
         <Route path='about' element={<About />} />
         <Route path='shop' element={<Shop />} />
         <Route path='cart' element={<Cart />} />
+        <Route path='*' element={<NotFound />} />
       </Routes>
 
 

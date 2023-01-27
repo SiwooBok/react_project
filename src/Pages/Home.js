@@ -284,7 +284,7 @@ export default function Home() {
       </VisualMain>
 
       <Description>
-        <DescriptionTitle>What is Atlasia?</DescriptionTitle>
+        <DescriptionTitle className="spoqa">What is Atlasia?</DescriptionTitle>
         <DescriptionSheet>
           <DescriptionImageBox>
             <DescriptionImage src={process.env.PUBLIC_URL+ '/images/about.jpg'}></DescriptionImage>
@@ -297,7 +297,7 @@ export default function Home() {
         </DescriptionSheet>
       </Description>
 
-      <Promotion>
+      <Promotion className="spoqa">
         <PromotionTitle>Get Your Own Dragon!</PromotionTitle>
         <PromotionSheet>
           <PromotionUnit01>
@@ -332,7 +332,7 @@ export default function Home() {
                 <CoinFront src={process.env.PUBLIC_URL+ '/images/coin.png'} />
                 <CoinBack src={process.env.PUBLIC_URL+ '/images/coin.png'} />
               </EventImgBox>
-            <EventIconText>33% discount!</EventIconText>
+            <EventIconText className="spoqa">33% discount!</EventIconText>
           </EventIcon>
         </Event>
       </EventOuterBox>
