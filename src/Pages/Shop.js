@@ -2,6 +2,8 @@ import styled from "styled-components";
 import { useState } from 'react'
 import data from "./productData";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 
 const ShopSection = styled.section `
@@ -79,6 +81,7 @@ const ProductImage = styled.img `
   display: block;
   width: 100%;
 `
+
 function GetProductShape(props) {
   const {products, index} = props
   switch(index) {
@@ -275,7 +278,6 @@ const probabilityData = [
 
 
 
-
 function GetTableUnit(props) {
   const {tableUnits, index} = props;
   
@@ -286,11 +288,11 @@ function GetTableUnit(props) {
                 tableUnits[0]["category"].map((categoryUnit, indexP) => {
                   switch(indexP) {
                     case 0:
-                      return <TableUnitName01 key={indexP}>{categoryUnit}</TableUnitName01>
+                      return <TableUnitName01 key={indexP} className="spoqa_bold">{categoryUnit}</TableUnitName01>
                     case 1:
-                      return <TableUnitName02 key={indexP}>{categoryUnit}</TableUnitName02>
+                      return <TableUnitName02 key={indexP} className="spoqa_bold">{categoryUnit}</TableUnitName02>
                     case 2:
-                      return <TableUnitName03 key={indexP}>{categoryUnit}</TableUnitName03>
+                      return <TableUnitName03 key={indexP} className="spoqa_bold">{categoryUnit}</TableUnitName03>
                     case 3:
                       return <TableUnitName04 key={indexP}>{categoryUnit}</TableUnitName04>
                     case 4:
@@ -456,12 +458,232 @@ function GetTableUnit(props) {
 
 
 
+const PopupOuterBox = styled.div `
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  backdrop-filter: blur(8px);
+`
+
+const PopupOutOfArea = styled.div `
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0; left: 0;
+  z-index: -1;
+`
+
+const PopupInnerBox = styled.div `
+  width: 700px;
+  height: 700px;
+  padding-top: 50px;
+  box-sizing: border-box;
+  border-radius: 20px;
+  background-color: rgba(40, 40, 40, 0.9);
+  position: relative;
+`
+
+const PopupImageBackground = styled.div `
+  width: 300px;
+  height: 300px;
+  border-radius: 20px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+  overflow: hidden;
+`
+
+const PopupImage = styled.img `
+  display: block;
+  width: 100%;
+`
+
+const PopupMiddleBox = styled.div `
+  width: 100%;
+  height: 200px;
+  padding: 0 50px;
+  box-sizing: border-box;
+  display: flex;
+  margin-bottom: 20px;
+`
+
+
+
+const PopupProbabilityBox = styled.div `
+  width: 50%;
+  font-size: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-around;
+  margin-bottom: 20px;
+`
+const PopupProbabilityUnit = styled.div `
+  width: 100%;
+  height: 20px;
+  padding-left: 60px;
+  box-sizing: border-box;
+  display: flex;
+  text-align: left;
+`
+
+const PopupProbText = styled.div `
+  width: 130px;
+`
+
+const PopupProbValue = styled.div `
+  width: calc(100% - 130px);
+`
+
+
+
+
+const PopupDescription = styled.div `
+  width: 50%;
+  padding-bottom: 30px;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+`
+
+const PopupName = styled.div `
+  width: 100%;
+  height: 50px;
+  font-size: 32px;
+  text-align: center;
+  line-height: 50px;
+  margin-bottom: 20px;
+`
+
+const PopupPrice = styled.div `
+  width: 100%;
+  height: 50px;
+  font-size: 20px;
+  text-align: center;
+  line-height: 50px;
+`
+
+const PopupButtonBox = styled.div `
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+`
+
+const PopupButton = styled.button `
+  display: block;
+  width: 200px;
+  height: 56px;
+  display: flex;
+  font-size: 18px;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: 2px solid #fff;
+  border-radius: 56px;
+  box-sizing: border-box;
+  cursor: pointer;
+`
+
+const PopupCartBtn = styled(PopupButton) `
+  margin-right: 50px;
+`
+
+const PopupBuyBtn = styled(PopupButton) `
+  color: #DFFF00;
+  border: 2px solid #DFFF00;
+`
+
+
+
+const PopupCloseBtn = styled.div `
+  width: 27px;
+  height: 27px;
+  text-align: center;
+  line-height: 27px;
+  border-radius: 5px;
+  background-color: rgb(255, 0, 0);
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+`
+
+function ShopPopup(props) {
+
+  const {setPopup, products, index} = props
+
+  return (
+    <PopupOuterBox>
+      <PopupOutOfArea onClick={() => setPopup(false)} />
+      <PopupInnerBox>
+        <PopupImageBackground style={{backgroundImage: `${products[index].gradient}`}}>
+          <PopupImage src={products[index].img} />
+        </PopupImageBackground>
+        <PopupMiddleBox>
+          <PopupProbabilityBox>
+            <PopupProbabilityUnit>
+              <PopupProbText>Epic</PopupProbText>
+              <PopupProbValue>{products[index].probability[0]}%</PopupProbValue>
+            </PopupProbabilityUnit>
+            <PopupProbabilityUnit>
+              <PopupProbText>Legend</PopupProbText>
+              <PopupProbValue>{products[index].probability[1]}%</PopupProbValue>
+            </PopupProbabilityUnit>
+            <PopupProbabilityUnit>
+              <PopupProbText>Unique</PopupProbText>
+              <PopupProbValue>{products[index].probability[2]}%</PopupProbValue>
+            </PopupProbabilityUnit>
+            <PopupProbabilityUnit>
+              <PopupProbText>SuperRare</PopupProbText>
+              <PopupProbValue>{products[index].probability[3]}%</PopupProbValue>
+            </PopupProbabilityUnit>
+            <PopupProbabilityUnit>
+              <PopupProbText>Rare</PopupProbText>
+              <PopupProbValue>{products[index].probability[4]}%</PopupProbValue>
+            </PopupProbabilityUnit>
+            <PopupProbabilityUnit>
+              <PopupProbText>Normal</PopupProbText>
+              <PopupProbValue>{products[index].probability[5]}%</PopupProbValue>
+            </PopupProbabilityUnit>
+          </PopupProbabilityBox>
+          <PopupDescription>
+            <PopupName style={{color: `${products[index].textColor}`, textShadow: `${products[index].textShadow}`, fontFamily: `${products[index].fontFamily}`}}>{products[index].name}</PopupName>
+            <PopupPrice>Price : {products[index].price} ATL Coin</PopupPrice>
+          </PopupDescription>
+        </PopupMiddleBox>
+        <PopupButtonBox>
+          <PopupCartBtn>CART</PopupCartBtn>
+          <PopupBuyBtn>BUY</PopupBuyBtn>
+        </PopupButtonBox>
+        <PopupCloseBtn onClick={() => setPopup(false)}>
+          <FontAwesomeIcon icon={faXmark} />
+        </PopupCloseBtn>
+      </PopupInnerBox>
+    </PopupOuterBox>
+  )
+}
+
+
+
+
+
+
 
 export default function Shop() {
 
   const [products] = useState(data)
   const [tableCategories] = useState(probabilityCategoryData)
   const [tableUnits] = useState(probabilityData)
+
+  const [popup, setPopup] = useState(false)
+  const [index, setIndex] = useState(0)
 
   return (
     <>
@@ -474,7 +696,10 @@ export default function Shop() {
             {
               products.map((product, index)=>{
                 return(
-                  <ProductUnit key={index}>
+                  <ProductUnit key={index} onClick={() => {
+                    setPopup(true)
+                    setIndex(index)
+                  }}>
                     <ProductImageBox>
                       <GetProductShape products={products} index={index} />
                     </ProductImageBox>
@@ -524,8 +749,14 @@ export default function Shop() {
           </ProbabilityOuterBox>
 
         </ShopContents>
+        {popup === true ? <ShopPopup setPopup={setPopup} products={products} index={index} /> : null}
       </ShopSection>
     </>
 
   )
 }
+
+
+
+
+

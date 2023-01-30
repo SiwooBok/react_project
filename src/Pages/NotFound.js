@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 
 const NotFoundSection = styled.section `
   width: 100%;
-  height: 980px;
-  padding-top: 180px;
+  height: 1000px;
+  padding-top: 220px;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;

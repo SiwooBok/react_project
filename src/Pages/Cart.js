@@ -71,7 +71,6 @@ const CartImageBox = styled.div `
 `
 
 const CartImageBox01 = styled(CartImageBox) `background-image: linear-gradient(to top, #3A7EC2, #E2E5CB);`
-const CartImageBox02 = styled(CartImageBox) `background-image: linear-gradient(to top, #6D6B4D, #E5E9DB);`
 const CartImageBox03 = styled(CartImageBox) `background-image: linear-gradient(to top, #858585, #DEDEDE);`
 
 
@@ -300,7 +299,7 @@ export default function Cart() {
                   <CartControlMinusBtn>
                   <FontAwesomeIcon icon={faMinus} size='sm' />
                   </CartControlMinusBtn>
-                  <CartCurrentQuantity>1</CartCurrentQuantity>
+                  <CartCurrentQuantity className="spoqa_bold">1</CartCurrentQuantity>
                   <CartControlPlusBtn>
                   <FontAwesomeIcon icon={faPlus} size='sm' />
                   </CartControlPlusBtn>
@@ -327,7 +326,7 @@ export default function Cart() {
                   <CartControlMinusBtn>
                   <FontAwesomeIcon icon={faMinus} size='sm' />
                   </CartControlMinusBtn>
-                  <CartCurrentQuantity>1</CartCurrentQuantity>
+                  <CartCurrentQuantity className="spoqa_bold">1</CartCurrentQuantity>
                   <CartControlPlusBtn>
                   <FontAwesomeIcon icon={faPlus} size='sm' />
                   </CartControlPlusBtn>
@@ -343,7 +342,7 @@ export default function Cart() {
             </TotalInnerBox>
           </TotalOuterBox>
 
-          <ButtonOuterBox>
+          <ButtonOuterBox className="spoqa">
             <ButtonInnerBox>
               <BtnMoreShopping>MORE SHOPPING</BtnMoreShopping>
               <BtnBuyNow>BUY NOW</BtnBuyNow>

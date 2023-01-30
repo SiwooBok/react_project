@@ -138,20 +138,40 @@ const CharImageBox = styled.div `
   border: 1px solid #DCB7B7;
   border-radius: 20px;
   box-sizing: border-box;
+  position: relative;
 `
 const CharImage = styled.img `display:block; width: 70%;`
 const CharName = styled.div `width: 100%; height: 112px; text-align: center; line-height: 112px;`
 
+const floatingChar = keyframes `
+  0% {transform: translateY(6px)}
+  50% {transform: translateY(-6px)}
+  100% {transform: translateY(6px)}
+`
+
+const floatingCharReverse = keyframes `
+  0% {transform: translateY(-3px)}
+  50% {transform: translateY(8px)}
+  100% {transform: translateY(-3px)}
+`
+
+const floatingCharSlow = keyframes `
+  0% {transform: translateY(0)}
+  50% {transform: translateY(-15px)}
+  100% {transform: translateY(0)}
+`
+
 const CharImageBox01 = styled(CharImageBox) `width: 340px;`
-const CharImage01 = styled(CharImage) `width: 70%;`
+const CharImage01 = styled(CharImage) `width: 70%; animation: 5s infinite ${floatingChar} ease-in-out;`
 const CharName01 = styled(CharName) `width: 100%;`
 
+
 const CharImageBox02 = styled(CharImageBox) `width: 340px;`
-const CharImage02 = styled(CharImage) `width: 70%;`
+const CharImage02 = styled(CharImage) `width: 70%; animation: 5s infinite ${floatingCharReverse} ease-in-out;`
 const CharName02 = styled(CharName) `width: 100%;`
 
 const CharImageBox03 = styled(CharImageBox) `width: 340px;`
-const CharImage03 = styled(CharImage) `width: 100%; transform: translate(0, 30px);`
+const CharImage03 = styled(CharImage) `width: 100%; position: absolute; top: 50px; left: 0; animation: 5s infinite ${floatingCharSlow} ease-in-out; animation-delay: 1s;`
 const CharName03 = styled(CharName) `width: 100%;`
 
 const PromotionBtn = styled.button `
