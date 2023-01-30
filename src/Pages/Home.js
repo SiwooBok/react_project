@@ -42,7 +42,7 @@ const TextWorld = styled.div `position: absolute; top: 560px; left: 860px;`
 const Description = styled.section `
   width: 100%;
   height: 800px;
-  padding-top: 130px;
+  padding-top: 120px;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;

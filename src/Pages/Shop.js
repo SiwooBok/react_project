@@ -273,6 +273,9 @@ const probabilityData = [
   {"normalBox": [0.1, 0.5, 1, 2, 5, 91.4]}
 ]
 
+
+
+
 function GetTableUnit(props) {
   const {tableUnits, index} = props;
   
