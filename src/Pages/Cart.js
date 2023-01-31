@@ -5,13 +5,21 @@ import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react'
 
+import { useDispatch, useSelector } from 'react-redux';
+import { addCount, subCount, deleteItem, calulateTotalPrice } from "./store";
+
+
 import AlertPopup from "./AlertPopup";
+import store from "./store";
+
+
+
+
 
 
 
 const CartSection = styled.section `
   width: 100%;
-  height: 2000px;
   padding-top: 248px;
   box-sizing: border-box;
   position: relative;
@@ -70,9 +78,9 @@ const CartImageBox = styled.div `
   border-radius: 20px;
   overflow: hidden;
   margin-right: 50px;
+  background-image: linear-gradient(${(props) => props.targetGradient || 'to top, #858585, #DEDEDE'});
 `
-const CartImageBox01 = styled(CartImageBox) `background-image: linear-gradient(to top, #3A7EC2, #E2E5CB);`
-const CartImageBox03 = styled(CartImageBox) `background-image: linear-gradient(to top, #858585, #DEDEDE);`
+
 const CartImage = styled.img `display: block; width: 100%; height: 100%;`
 
 const CartDescriptionBox = styled.div `
@@ -91,6 +99,18 @@ const CartNameBox = styled.div `
 const CartName = styled.div `width: 150px;`
 const CartQuantity = styled.div `width: calc(100% - 150px); text-indent: 30px;`
 
+const CartPriceBox = styled.div `
+  width: 100%;
+  height: 50px;
+  display: flex;
+  font-size: 20px;
+  line-height: 50px;
+`
+const CartPrice = styled.div `width: 163px;`
+const CartPriceValue = styled.div `width: calc(100% - 163px);`
+
+
+
 const CartUnitRightBox = styled.div `
   width: calc(100% - 300px - 50px - 320px);
   padding-top: 175px;
@@ -102,9 +122,9 @@ const CartRemoveBox = styled.div `
   margin-bottom: 38px;
 `
 const CartRemoveBtn = styled.button `
-  width: 248px;
+  width: 230px;
   height: 40px;
-  font-size: 20px;
+  font-size: 19px;
   color: #fff;
   border: 1px solid #fff;
   border-radius: 40px;
@@ -196,6 +216,50 @@ const CartFinalButton = styled.button `
 const BtnMoreShopping = styled(CartFinalButton) `width: 260px;`
 const BtnBuyNow = styled(CartFinalButton) `color: #DFFF00; border: 2px solid #DFFF00;`
 
+const CartBottomPadding = styled.div `width: 100%; height: 235px;`
+
+
+
+
+let sumValue = 0;
+function calculateSumValue(numList) {
+
+  if (numList.length > 0) {
+    numList.forEach((targetNumber, i) => {
+      if (i === 0) {
+        sumValue = targetNumber.price * targetNumber.count;
+      } else {
+        sumValue += targetNumber.price * targetNumber.count;
+      }
+    })
+  
+    let StringifiedPrice = `${sumValue}`;
+    let modifiedPriceString = '';
+    for(let k=0; k<StringifiedPrice.length; k++) {
+      let priceTextIndex = StringifiedPrice.length-k-1
+      let slicedText = StringifiedPrice[priceTextIndex];
+      if ((k+1)%3 !== 0) {
+        modifiedPriceString = slicedText + modifiedPriceString;
+      } else if ((k+1)%3 === 0) {
+        modifiedPriceString = slicedText + modifiedPriceString;
+        modifiedPriceString = ',' + modifiedPriceString;
+      }
+    }
+    if (StringifiedPrice.length%3 === 0) {
+      let washedString = '';
+      for (let k=1; k<modifiedPriceString.length; k++) {
+        washedString += modifiedPriceString[k];
+      }
+      modifiedPriceString = washedString;
+    }
+    sumValue = `${modifiedPriceString}`;
+  } else {
+    sumValue = 0;
+  }
+}
+
+
+
 
 
 
@@ -209,6 +273,11 @@ export default function Cart() {
   const [alertPopup, setAlertPopup] = useState(false)
   const [alertMessage, setAlertMessage] = useState('')
 
+  const state = useSelector((state) => {return state})
+  const dispatch = useDispatch()
+
+  calculateSumValue(state.cart)
+
   return (
     <>
       <CartSection targetImg={process.env.PUBLIC_URL+ '/images/sub_background.jpg'}>
@@ -217,77 +286,81 @@ export default function Cart() {
           <CartTitle className="spoqa">Cart</CartTitle>
 
           <CartSheet>
-            <CartUnit>
-              <CartImageBox01>
-                <CartImage src={process.env.PUBLIC_URL+ '/images/box.png'}></CartImage>
-              </CartImageBox01>
-              <CartDescriptionBox>
-                <CartNameBox>
-                  <CartName>Epic Box</CartName>
-                  <CartQuantity>x 1</CartQuantity>
-                </CartNameBox>
-              </CartDescriptionBox>
-              <CartUnitRightBox>
-                <CartRemoveBox>
-                  <CartRemoveBtn>remove from the cart</CartRemoveBtn>
-                </CartRemoveBox>
-                <CartControlBox>
-                  <CartControlText>count</CartControlText>
-                  <CartControlMinusBtn>
-                  <FontAwesomeIcon icon={faMinus} size='sm' />
-                  </CartControlMinusBtn>
-                  <CartCurrentQuantity className="spoqa_bold">1</CartCurrentQuantity>
-                  <CartControlPlusBtn>
-                  <FontAwesomeIcon icon={faPlus} size='sm' />
-                  </CartControlPlusBtn>
-                </CartControlBox>
-              </CartUnitRightBox>
-            </CartUnit>
+            {
+              state.cart.map((item, i) => {
+                return (
+                  <CartUnit key={i}>
+                    <CartImageBox targetGradient={state.cart[i].gradient}>
+                      <CartImage src={state.cart[i].img}></CartImage>
+                    </CartImageBox>
+                    <CartDescriptionBox>
+                      <CartNameBox>
+                        <CartName>{state.cart[i].name}</CartName>
+                        <CartQuantity>x {state.cart[i].count}</CartQuantity>
+                      </CartNameBox>
+                      <CartPriceBox>
+                        <CartPrice>Current Price</CartPrice>
+                        <CartPriceValue>{state.cart[i].count*state.cart[i].price}</CartPriceValue>
+                      </CartPriceBox>
+                    </CartDescriptionBox>
+                    <CartUnitRightBox>
+                      <CartRemoveBox>
+                        <CartRemoveBtn onClick={() => {
+                            dispatch(deleteItem(state.cart[i].id))
+                            calculateSumValue(state.cart);
+                          }}>
+                          remove from the cart
+                        </CartRemoveBtn>
+                      </CartRemoveBox>
+                      <CartControlBox>
+                        <CartControlText>count</CartControlText>
+                        <CartControlMinusBtn onClick={() => {
+                            dispatch(subCount(state.cart[i].id));
+                            calculateSumValue(state.cart);
+                          }}>
+                          <FontAwesomeIcon icon={faMinus} size='sm' />
+                        </CartControlMinusBtn>
+                        <CartCurrentQuantity className="spoqa_bold">{state.cart[i].count}</CartCurrentQuantity>
+                        <CartControlPlusBtn onClick={() => {
+                          dispatch(addCount(state.cart[i].id));
+                          calculateSumValue(state.cart);
+                        }}>
+                          <FontAwesomeIcon icon={faPlus} size='sm' />
+                        </CartControlPlusBtn>
+                      </CartControlBox>
+                    </CartUnitRightBox>
+                  </CartUnit>
+                )
+              })
+            }
 
-            <CartUnit>
-              <CartImageBox03>
-                <CartImage src={process.env.PUBLIC_URL+ '/images/box.png'}></CartImage>
-              </CartImageBox03>
-              <CartDescriptionBox>
-                <CartNameBox>
-                  <CartName>Rare Box</CartName>
-                  <CartQuantity>x 1</CartQuantity>
-                </CartNameBox>
-              </CartDescriptionBox>
-              <CartUnitRightBox>
-                <CartRemoveBox>
-                  <CartRemoveBtn>remove from the cart</CartRemoveBtn>
-                </CartRemoveBox>
-                <CartControlBox>
-                  <CartControlText>count</CartControlText>
-                  <CartControlMinusBtn>
-                  <FontAwesomeIcon icon={faMinus} size='sm' />
-                  </CartControlMinusBtn>
-                  <CartCurrentQuantity className="spoqa_bold">1</CartCurrentQuantity>
-                  <CartControlPlusBtn>
-                  <FontAwesomeIcon icon={faPlus} size='sm' />
-                  </CartControlPlusBtn>
-                </CartControlBox>
-              </CartUnitRightBox>
-            </CartUnit>
           </CartSheet>
 
           <TotalOuterBox>
             <TotalInnerBox>
               <TotalText>Total</TotalText>
-              <TotalValueBox><TotalPrice className="spoqa">2,400</TotalPrice>ATL Coin</TotalValueBox>
+              <TotalValueBox>
+                <TotalPrice className="spoqa">{sumValue}</TotalPrice>ATL Coin
+              </TotalValueBox>
             </TotalInnerBox>
           </TotalOuterBox>
 
           <ButtonOuterBox className="spoqa">
             <ButtonInnerBox>
               <BtnMoreShopping onClick={()=>{navigate('/shop')}}>MORE SHOPPING</BtnMoreShopping>
-              <BtnBuyNow onClick={() => {setAlertPopup(true); setAlertMessage('The System is under maintenance');}}>BUY NOW</BtnBuyNow>
+              <BtnBuyNow onClick={() => {
+                if (sumValue === 0) {
+                  setAlertPopup(true); setAlertMessage('The cart is empty');
+                } else {
+                  setAlertPopup(true); setAlertMessage('The System is under maintenance');
+                }
+                }}>BUY NOW</BtnBuyNow>
             </ButtonInnerBox>
           </ButtonOuterBox>
 
         </CartContents>
         {alertPopup === true ? <AlertPopup setAlertPopup={setAlertPopup} alertMessage={alertMessage} bg='to top, rgba(20, 20, 20, 0.95), rgba(35, 35, 35, 0.95)' /> : null}
+        <CartBottomPadding />
       </CartSection>
     </>
   )

@@ -73,9 +73,9 @@ const NotFoundText = styled.div `
 
 const BtnGoHome = styled.button `
   display: block;
-  width: 200px;
+  width: 190px;
   height: 60px;
-  font-size: 20px;
+  font-size: 18px;
   color: #fff;
   text-align: center;
   line-height: 60px;

@@ -5,6 +5,9 @@ import data from "./productData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
+import { useDispatch } from "react-redux";
+import { addItem } from "./store";
+
 import AlertPopup from "./AlertPopup";
 
 
@@ -160,7 +163,6 @@ function GetProductPrice(props) {
       modifiedPriceString = ',' + modifiedPriceString;
     }
   }
-  /* StringifiedPrice 문자열의 총길이가 3으로 나누어 떨어질경우 맨 왼쪽의 ',' 1개 제거 */
   if (StringifiedPrice.length%3 === 0) {
     let washedString = '';
     for (let k=1; k<modifiedPriceString.length; k++) {
@@ -447,7 +449,7 @@ function GetTableUnit(props) {
                   }
                 </ProbabilityTableRow>
     default:
-      return <ProbabilityTableRow>데이터 로드 실패</ProbabilityTableRow>
+      return <ProbabilityTableRow>Data Loading Failed</ProbabilityTableRow>
   }
 }
 
@@ -493,7 +495,7 @@ const PopupImageBackground = styled.div `
   width: 300px;
   height: 300px;
   border-radius: 20px;
-  background-image: ${(props) => props.targetGradient};
+  background-image: linear-gradient(${(props) => props.targetGradient || 'to top, #858585, #DEDEDE'});
   margin: 0 auto;
   margin-bottom: 30px;
   overflow: hidden;
@@ -598,6 +600,9 @@ const PopupCloseBtn = styled.div `
 function ShopPopup(props) {
   const {setShopPopup, products, index, setAlertPopup, alertPopup} = props
   const [alertMessage, setAlertMessage] = useState('')
+
+  const dispatch = useDispatch()
+
   return (
     <PopupOuterBox>
       <PopupOutOfArea onClick={() => setShopPopup(false)} />
@@ -638,7 +643,22 @@ function ShopPopup(props) {
           </PopupDescription>
         </PopupMiddleBox>
         <PopupButtonBox>
-          <PopupCartBtn onClick={() => {setAlertPopup(true); setAlertMessage('Item has been added to your cart');}}>CART</PopupCartBtn>
+          <PopupCartBtn onClick={() => {
+            setAlertPopup(true); setAlertMessage('The item has been added to your cart');
+            dispatch(addItem({
+              id: products[index].id,
+              img: products[index].img,
+              imgName: products[index].imgName,
+              gradient: products[index].gradient,
+              textColor: products[index].textColor,
+              textShadow: products[index].textShadow,
+              fontFamily: products[index].fontFamily,
+              name: products[index].name,
+              price: products[index].price,
+              totalPrice: products[index].totalPrice,
+              count: 1
+            }))
+            }}>CART</PopupCartBtn>
           <PopupBuyBtn onClick={() => {setAlertPopup(true); setAlertMessage('The System is under maintenance');}}>BUY</PopupBuyBtn>
         </PopupButtonBox>
         <PopupCloseBtn onClick={() => setShopPopup(false)}>
