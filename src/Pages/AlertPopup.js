@@ -34,7 +34,7 @@ const AlertInnerBox = styled.div `
 const AlertText = styled.div `
   width: 100%;
   height: 50px;
-  font-size: 15px;
+  font-size: 15.5px;
   color: #eee;
   text-align: center;
   line-height: 50px;
@@ -44,13 +44,13 @@ const AlertCloseBtn = styled.button `
   display: block;
   width: 90px;
   height: 40px;
-  font-size: 13px;
+  font-size: 12px;
   color: #eee;
   text-align: center;
   line-height: 40px;
   background-color: transparent;
   border: 1px solid #eee;
-  border-radius: 30px;
+  border-radius: 40px;
   margin: 0 auto;
   cursor: pointer;
 `
@@ -64,7 +64,7 @@ export default function AlertPopup(props) {
       <AlertOutOfArea onClick={() => {setAlertPopup(false)}} />
       <AlertInnerBox bg={bg}>
         <AlertText>{alertMessage}</AlertText>
-        <AlertCloseBtn onClick={() => {setAlertPopup(false)}}>닫기</AlertCloseBtn>
+        <AlertCloseBtn onClick={() => {setAlertPopup(false)}}>CLOSE</AlertCloseBtn>
         </AlertInnerBox>
     </AlertOuterBox>
   )

@@ -282,7 +282,7 @@ export default function Cart() {
           <ButtonOuterBox className="spoqa">
             <ButtonInnerBox>
               <BtnMoreShopping onClick={()=>{navigate('/shop')}}>MORE SHOPPING</BtnMoreShopping>
-              <BtnBuyNow onClick={() => {setAlertPopup(true); setAlertMessage('서버 점검중입니다.');}}>BUY NOW</BtnBuyNow>
+              <BtnBuyNow onClick={() => {setAlertPopup(true); setAlertMessage('The System is under maintenance');}}>BUY NOW</BtnBuyNow>
             </ButtonInnerBox>
           </ButtonOuterBox>
 

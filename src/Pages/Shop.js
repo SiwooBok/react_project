@@ -638,8 +638,8 @@ function ShopPopup(props) {
           </PopupDescription>
         </PopupMiddleBox>
         <PopupButtonBox>
-          <PopupCartBtn onClick={() => {setAlertPopup(true); setAlertMessage('장바구니에 추가되었습니다.');}}>CART</PopupCartBtn>
-          <PopupBuyBtn onClick={() => {setAlertPopup(true); setAlertMessage('서버 점검중입니다.');}}>BUY</PopupBuyBtn>
+          <PopupCartBtn onClick={() => {setAlertPopup(true); setAlertMessage('Item has been added to your cart');}}>CART</PopupCartBtn>
+          <PopupBuyBtn onClick={() => {setAlertPopup(true); setAlertMessage('The System is under maintenance');}}>BUY</PopupBuyBtn>
         </PopupButtonBox>
         <PopupCloseBtn onClick={() => setShopPopup(false)}>
           <FontAwesomeIcon icon={faXmark} />
