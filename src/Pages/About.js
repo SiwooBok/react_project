@@ -55,15 +55,15 @@ const AboutSheetText = styled.div `width: 100%; font-size: 19px; line-height: 25
 const FirstOfPhrase = styled.span `font-size: 38px; margin-right: 2px;`
 
 const AboutPostscriptBox = styled.div `
-  width: 530px;
-  height: 120px;
+  width: 480px;
+  height: 105px;
   display: flex;
   margin: 0 auto;
 `
 
 const AboutPostscriptImgBox = styled.div `
-  width: 120px;
-  height: 120px;
+  width: 105px;
+  height: 105px;
   filter: invert(30%);
 `
 
@@ -75,17 +75,17 @@ const AboutPostscriptImg = styled.img `
 const AboutPostscriptText = styled.div `
   width: calc(100% - 120px);
   height: 100%;
-  padding-left: 25px;
+  padding-left: 18px;
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   align-content: center;
-  font-size: 16px;
+  font-size: 14px;
   color: #ccc;
 `
 
-const AboutPostscriptPhrase01 = styled.div `width: 100%; height: 35px; line-height: 35px;`
-const AboutPostscriptPhrase02 = styled.div `width: 100%; height: 35px; line-height: 35px; text-indent: 10px;`
+const AboutPostscriptPhrase01 = styled.div `width: 100%; height: 25px; line-height: 25px;`
+const AboutPostscriptPhrase02 = styled.div `width: 100%; height: 25px; line-height: 25px; text-indent: 10px;`
 
 const AboutMarginSpan = styled.span `margin-right: 8px;`
 
@@ -111,7 +111,7 @@ export default function About() {
               </AboutPostscriptImgBox>
               <AboutPostscriptText>
                 <AboutPostscriptPhrase01 className="spoqa"><AboutMarginSpan>-</AboutMarginSpan>A Papyrus written by The Last Prophet.</AboutPostscriptPhrase01>
-                <AboutPostscriptPhrase02 className="spoqa">12.11.8. Year of Genesis.</AboutPostscriptPhrase02>
+                <AboutPostscriptPhrase02 className="spoqa">4th Nov, 196 Year of Genesis.</AboutPostscriptPhrase02>
               </AboutPostscriptText>
             </AboutPostscriptBox>
         </AboutContents>

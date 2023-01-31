@@ -2,6 +2,13 @@ import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
 
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react'
+
+import AlertPopup from "./AlertPopup";
+
+
+
 const CartSection = styled.section `
   width: 100%;
   height: 2000px;
@@ -15,7 +22,6 @@ const CartSection = styled.section `
   background-repeat: no-repeat;
   background-attachment: fixed;
 `
-
 const CartBrightnessBox = styled.div `
   width: 100%;
   height: 100%;
@@ -23,9 +29,9 @@ const CartBrightnessBox = styled.div `
   top: 0;
   left: 0;
   z-index: 1;
-  background-color: rgba(35, 35, 35, 0.4);
+  background-color: rgba(50, 50, 50, 0.55);
+  backdrop-filter: blur(6px);
 `
-
 const CartContents = styled.div `
   width: 100%;
   height: 100%;
@@ -33,7 +39,6 @@ const CartContents = styled.div `
   position: relative;
   z-index: 2;
 `
-
 const CartTitle = styled.div `
   width: 100%;
   height: 45px;
@@ -46,7 +51,6 @@ const CartTitle = styled.div `
 
 const CartSheet = styled.div `
   width: 1070px;
-  height: 889px;
   display: flex;
   flex-wrap: wrap;
   align-content: space-between;
@@ -54,31 +58,22 @@ const CartSheet = styled.div `
   margin-bottom: 91px;
   border-bottom: 2px solid #fff;
 `
-
 const CartUnit = styled.div `
   width: 100%;
-  height: 340px;
+  height: 300px;
   display: flex;
-  margin-bottom: 97px;
+  margin-bottom: 110px;
 `
-
 const CartImageBox = styled.div `
-  width: 340px;
-  height: 340px;
+  width: 300px;
+  height: 300px;
   border-radius: 20px;
   overflow: hidden;
   margin-right: 50px;
 `
-
 const CartImageBox01 = styled(CartImageBox) `background-image: linear-gradient(to top, #3A7EC2, #E2E5CB);`
 const CartImageBox03 = styled(CartImageBox) `background-image: linear-gradient(to top, #858585, #DEDEDE);`
-
-
-const CartImage = styled.img `
-  display: block;
-  width: 100%;
-  height: 100%;
-`
+const CartImage = styled.img `display: block; width: 100%; height: 100%;`
 
 const CartDescriptionBox = styled.div `
   width: 320px;
@@ -86,40 +81,26 @@ const CartDescriptionBox = styled.div `
   padding-top: 42px;
   box-sizing: border-box;
 `
-
 const CartNameBox = styled.div `
   width: 100%;
   height: 50px;
   display: flex;
-  font-size: 32px;
+  font-size: 24px;
   line-height: 50px;
 `
-
-const CartName = styled.div `
-  width: 150px;
-`
-
-const CartQuantity = styled.div `
-  width: calc(100% - 150px);
-  text-indent: 30px;
-`
-
-
-
-
+const CartName = styled.div `width: 150px;`
+const CartQuantity = styled.div `width: calc(100% - 150px); text-indent: 30px;`
 
 const CartUnitRightBox = styled.div `
-  width: calc(100% - 340px - 50px - 320px);
-  padding-top: 215px;
+  width: calc(100% - 300px - 50px - 320px);
+  padding-top: 175px;
   box-sizing: border-box;
 `
-
 const CartRemoveBox = styled.div `
   width: 100%;
   height: 40px;
   margin-bottom: 38px;
 `
-
 const CartRemoveBtn = styled.button `
   width: 248px;
   height: 40px;
@@ -138,18 +119,16 @@ const CartControlBox = styled.div `
   height: 40px;
   display: flex;
 `
-
 const CartControlText = styled.div `
   width: calc(100% - 65px - 65px - 65px);
   height: 40px;
   font-size: 32px;
 `
-
 const CartControlBtn = styled.button `
   width: 65px;
   height: 40px;
   display: flex;
-  font-size: 32px;
+  font-size: 24px;
   color: #fff;
   justify-content: center;
   align-items: center;
@@ -157,32 +136,15 @@ const CartControlBtn = styled.button `
   background-color: transparent;
   cursor: pointer;
 `
-
 const CartControlMinusBtn = styled(CartControlBtn) `width: 65px;`
 const CartControlPlusBtn = styled(CartControlBtn) `width: 65px;`
-
-
 const CartCurrentQuantity = styled.div `
   width: 65px;
   height: 40px;
-  font-size: 34px;
+  font-size: 24px;
   text-align: center;
   line-height: 40px;
 `
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 const TotalOuterBox = styled.div `
   width: 1070px;
@@ -192,7 +154,6 @@ const TotalOuterBox = styled.div `
   margin: 0 auto;
   margin-bottom: 235px;
 `
-
 const TotalInnerBox = styled.div `
   width: 400px;
   height: 50px;
@@ -201,27 +162,9 @@ const TotalInnerBox = styled.div `
   font-size: 32px;
   line-height: 50px;
 `
-
-const TotalText = styled.div `
-  width: 80px;
-  height: 50px;
-`
-
-const TotalValueBox = styled.div `
-  height: 50px;
-`
-
-
-
-
-
-
-
-
-
-
-
-
+const TotalText = styled.div `width: 80px; height: 50px;`
+const TotalValueBox = styled.div `height: 50px;`
+const TotalPrice = styled.span `color: #C1C7F1; text-shadow: rgba(138, 154, 55, 0.4) 1px 0 10px; margin-right: 18px;`
 
 const ButtonOuterBox = styled.div `
   display: flex;
@@ -230,19 +173,17 @@ const ButtonOuterBox = styled.div `
   height: 60px;
   margin: 0 auto;
 `
-
 const ButtonInnerBox = styled.div `
   width: 557px;
   height: 60px;
   display: flex;
   justify-content: space-between;
 `
-
 const CartFinalButton = styled.button `
   width: 260px;
   height: 60px;
   display: flex;
-  font-size: 20px;
+  font-size: 18px;
   color: #fff;
   justify-content: center;
   align-items: center;
@@ -252,18 +193,8 @@ const CartFinalButton = styled.button `
   box-sizing: border-box;
   cursor: pointer;
 `
-
-const BtnMoreShopping = styled(CartFinalButton) `
-  width: 260px;
-`
-
-const BtnBuyNow = styled(CartFinalButton) `
-  color: #DFFF00;
-  border: 2px solid #DFFF00;
-`
-
-
-
+const BtnMoreShopping = styled(CartFinalButton) `width: 260px;`
+const BtnBuyNow = styled(CartFinalButton) `color: #DFFF00; border: 2px solid #DFFF00;`
 
 
 
@@ -272,6 +203,12 @@ const BtnBuyNow = styled(CartFinalButton) `
 
 
 export default function Cart() {
+
+  const navigate = useNavigate()
+
+  const [alertPopup, setAlertPopup] = useState(false)
+  const [alertMessage, setAlertMessage] = useState('')
+
   return (
     <>
       <CartSection targetImg={process.env.PUBLIC_URL+ '/images/sub_background.jpg'}>
@@ -338,18 +275,19 @@ export default function Cart() {
           <TotalOuterBox>
             <TotalInnerBox>
               <TotalText>Total</TotalText>
-              <TotalValueBox>2,400 ATL Coin</TotalValueBox>
+              <TotalValueBox><TotalPrice className="spoqa">2,400</TotalPrice>ATL Coin</TotalValueBox>
             </TotalInnerBox>
           </TotalOuterBox>
 
           <ButtonOuterBox className="spoqa">
             <ButtonInnerBox>
-              <BtnMoreShopping>MORE SHOPPING</BtnMoreShopping>
-              <BtnBuyNow>BUY NOW</BtnBuyNow>
+              <BtnMoreShopping onClick={()=>{navigate('/shop')}}>MORE SHOPPING</BtnMoreShopping>
+              <BtnBuyNow onClick={() => {setAlertPopup(true); setAlertMessage('서버 점검중입니다.');}}>BUY NOW</BtnBuyNow>
             </ButtonInnerBox>
           </ButtonOuterBox>
 
         </CartContents>
+        {alertPopup === true ? <AlertPopup setAlertPopup={setAlertPopup} alertMessage={alertMessage} bg='to top, rgba(20, 20, 20, 0.95), rgba(35, 35, 35, 0.95)' /> : null}
       </CartSection>
     </>
   )

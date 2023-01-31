@@ -21,7 +21,8 @@ const NotFoundBrightnessBox = styled.div `
   top: 0;
   left: 0;
   z-index: 1;
-  background-color: rgba(35, 35, 35, 0.4);
+  background-color: rgba(50, 50, 50, 0.55);
+  backdrop-filter: blur(5px);
 `
 
 const NotFoundContents = styled.div `

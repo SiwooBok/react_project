@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const VisualMain = styled.section `
   width: 100%;
-  height: 820px;
+  height: 830px;
   position: relative;
   overflow: hidden;
   background-image: url(${(props) => props.targetImg});
@@ -41,8 +41,8 @@ const TextWorld = styled.div `position: absolute; top: 560px; left: 860px;`
 
 const Description = styled.section `
   width: 100%;
-  height: 800px;
-  padding-top: 120px;
+  height: 790px;
+  padding-top: 105px;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;

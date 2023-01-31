@@ -5,6 +5,8 @@ import data from "./productData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
+import AlertPopup from "./AlertPopup";
+
 
 const ShopSection = styled.section `
   width: 100%;
@@ -27,7 +29,8 @@ const ShopBrightnessBox = styled.div `
   top: 0;
   left: 0;
   z-index: 1;
-  background-color: rgba(35, 35, 35, 0.4);
+  background-color: rgba(35, 35, 35, 0.45);
+  backdrop-filter: blur(3px);
 `
 
 const ShopContents = styled.div `
@@ -234,6 +237,8 @@ function GetProbCategory(props) {
       return <TableCategoryUnit05>{tableCategories[index]}</TableCategoryUnit05>
     case 5:
       return <TableCategoryUnit06>{tableCategories[index]}</TableCategoryUnit06>
+    default:
+      return <TableCategoryUnit06>{tableCategories[index]}</TableCategoryUnit06>
   }
 }
 
@@ -275,8 +280,6 @@ const probabilityData = [
   {"rareBox": [0.2, 0.8, 1.5, 4, 10, 83.5]},
   {"normalBox": [0.1, 0.5, 1, 2, 5, 91.4]}
 ]
-
-
 
 function GetTableUnit(props) {
   const {tableUnits, index} = props;
@@ -468,17 +471,15 @@ const PopupOuterBox = styled.div `
   top: 0;
   left: 0;
   z-index: 999;
-  backdrop-filter: blur(8px);
 `
-
 const PopupOutOfArea = styled.div `
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0; left: 0;
   z-index: -1;
+  backdrop-filter: blur(8px);
 `
-
 const PopupInnerBox = styled.div `
   width: 700px;
   height: 700px;
@@ -488,20 +489,16 @@ const PopupInnerBox = styled.div `
   background-color: rgba(40, 40, 40, 0.9);
   position: relative;
 `
-
 const PopupImageBackground = styled.div `
   width: 300px;
   height: 300px;
   border-radius: 20px;
+  background-image: ${(props) => props.targetGradient};
   margin: 0 auto;
   margin-bottom: 30px;
   overflow: hidden;
 `
-
-const PopupImage = styled.img `
-  display: block;
-  width: 100%;
-`
+const PopupImage = styled.img `display: block; width: 100%;`
 
 const PopupMiddleBox = styled.div `
   width: 100%;
@@ -511,9 +508,6 @@ const PopupMiddleBox = styled.div `
   display: flex;
   margin-bottom: 20px;
 `
-
-
-
 const PopupProbabilityBox = styled.div `
   width: 50%;
   font-size: 16px;
@@ -530,17 +524,14 @@ const PopupProbabilityUnit = styled.div `
   display: flex;
   text-align: left;
 `
-
 const PopupProbText = styled.div `
   width: 130px;
+  color: ${(props) => props.targetColor};
 `
-
 const PopupProbValue = styled.div `
   width: calc(100% - 130px);
+  color: ${(props) => props.targetColor};
 `
-
-
-
 
 const PopupDescription = styled.div `
   width: 50%;
@@ -550,16 +541,17 @@ const PopupDescription = styled.div `
   flex-wrap: wrap;
   align-content: center;
 `
-
 const PopupName = styled.div `
   width: 100%;
   height: 50px;
+  color: ${(props) => props.targetColor};
+  text-shadow: ${(props) => props.targetShadow};
+  font-family: ${(props) => props.targetFont};
   font-size: 32px;
   text-align: center;
   line-height: 50px;
   margin-bottom: 20px;
 `
-
 const PopupPrice = styled.div `
   width: 100%;
   height: 50px;
@@ -567,14 +559,12 @@ const PopupPrice = styled.div `
   text-align: center;
   line-height: 50px;
 `
-
 const PopupButtonBox = styled.div `
   width: 100%;
   height: 60px;
   display: flex;
   justify-content: center;
 `
-
 const PopupButton = styled.button `
   display: block;
   width: 200px;
@@ -590,18 +580,8 @@ const PopupButton = styled.button `
   box-sizing: border-box;
   cursor: pointer;
 `
-
-const PopupCartBtn = styled(PopupButton) `
-  margin-right: 50px;
-`
-
-const PopupBuyBtn = styled(PopupButton) `
-  color: #DFFF00;
-  border: 2px solid #DFFF00;
-`
-
-
-
+const PopupCartBtn = styled(PopupButton) `margin-right: 50px;`
+const PopupBuyBtn = styled(PopupButton) `color: #DFFF00; border: 2px solid #DFFF00;`
 const PopupCloseBtn = styled.div `
   width: 27px;
   height: 27px;
@@ -616,59 +596,67 @@ const PopupCloseBtn = styled.div `
 `
 
 function ShopPopup(props) {
-
-  const {setPopup, products, index} = props
-
+  const {setShopPopup, products, index, setAlertPopup, alertPopup} = props
+  const [alertMessage, setAlertMessage] = useState('')
   return (
     <PopupOuterBox>
-      <PopupOutOfArea onClick={() => setPopup(false)} />
+      <PopupOutOfArea onClick={() => setShopPopup(false)} />
       <PopupInnerBox>
-        <PopupImageBackground style={{backgroundImage: `${products[index].gradient}`}}>
+        <PopupImageBackground targetGradient={products[index].gradient}>
           <PopupImage src={products[index].img} />
         </PopupImageBackground>
         <PopupMiddleBox>
           <PopupProbabilityBox>
             <PopupProbabilityUnit>
-              <PopupProbText>Epic</PopupProbText>
-              <PopupProbValue>{products[index].probability[0]}%</PopupProbValue>
+              <PopupProbText targetColor={products[0].textColor}>Epic</PopupProbText>
+              <PopupProbValue targetColor={products[0].textColor}>{products[index].probability[0]}%</PopupProbValue>
             </PopupProbabilityUnit>
             <PopupProbabilityUnit>
-              <PopupProbText>Legend</PopupProbText>
-              <PopupProbValue>{products[index].probability[1]}%</PopupProbValue>
+              <PopupProbText targetColor={products[1].textColor}>Legend</PopupProbText>
+              <PopupProbValue targetColor={products[1].textColor}>{products[index].probability[1]}%</PopupProbValue>
             </PopupProbabilityUnit>
             <PopupProbabilityUnit>
-              <PopupProbText>Unique</PopupProbText>
-              <PopupProbValue>{products[index].probability[2]}%</PopupProbValue>
+              <PopupProbText targetColor={products[2].textColor}>Unique</PopupProbText>
+              <PopupProbValue targetColor={products[2].textColor}>{products[index].probability[2]}%</PopupProbValue>
             </PopupProbabilityUnit>
             <PopupProbabilityUnit>
-              <PopupProbText>SuperRare</PopupProbText>
-              <PopupProbValue>{products[index].probability[3]}%</PopupProbValue>
+              <PopupProbText targetColor={'#fff'}>SuperRare</PopupProbText>
+              <PopupProbValue targetColor={'#fff'}>{products[index].probability[3]}%</PopupProbValue>
             </PopupProbabilityUnit>
             <PopupProbabilityUnit>
-              <PopupProbText>Rare</PopupProbText>
-              <PopupProbValue>{products[index].probability[4]}%</PopupProbValue>
+              <PopupProbText targetColor={'#fff'}>Rare</PopupProbText>
+              <PopupProbValue targetColor={'#fff'}>{products[index].probability[4]}%</PopupProbValue>
             </PopupProbabilityUnit>
             <PopupProbabilityUnit>
-              <PopupProbText>Normal</PopupProbText>
-              <PopupProbValue>{products[index].probability[5]}%</PopupProbValue>
+              <PopupProbText targetColor={'#fff'}>Normal</PopupProbText>
+              <PopupProbValue targetColor={'#fff'}>{products[index].probability[5]}%</PopupProbValue>
             </PopupProbabilityUnit>
           </PopupProbabilityBox>
           <PopupDescription>
-            <PopupName style={{color: `${products[index].textColor}`, textShadow: `${products[index].textShadow}`, fontFamily: `${products[index].fontFamily}`}}>{products[index].name}</PopupName>
+            <PopupName targetColor={products[index].textColor} targetShadow={products[index].textShadow} targetFont={products[index].fontFamily}>{products[index].name}</PopupName>
             <PopupPrice>Price : {products[index].price} ATL Coin</PopupPrice>
           </PopupDescription>
         </PopupMiddleBox>
         <PopupButtonBox>
-          <PopupCartBtn>CART</PopupCartBtn>
-          <PopupBuyBtn>BUY</PopupBuyBtn>
+          <PopupCartBtn onClick={() => {setAlertPopup(true); setAlertMessage('장바구니에 추가되었습니다.');}}>CART</PopupCartBtn>
+          <PopupBuyBtn onClick={() => {setAlertPopup(true); setAlertMessage('서버 점검중입니다.');}}>BUY</PopupBuyBtn>
         </PopupButtonBox>
-        <PopupCloseBtn onClick={() => setPopup(false)}>
+        <PopupCloseBtn onClick={() => setShopPopup(false)}>
           <FontAwesomeIcon icon={faXmark} />
         </PopupCloseBtn>
       </PopupInnerBox>
+      {alertPopup === true ? <AlertPopup setAlertPopup={setAlertPopup} alertMessage={alertMessage} bg='to top, rgba(0, 0, 0, 1), rgba(25, 25, 25, 1)' /> : null}
     </PopupOuterBox>
   )
 }
+
+
+
+
+
+
+
+
 
 
 
@@ -682,8 +670,10 @@ export default function Shop() {
   const [tableCategories] = useState(probabilityCategoryData)
   const [tableUnits] = useState(probabilityData)
 
-  const [popup, setPopup] = useState(false)
+  const [shopPopup, setShopPopup] = useState(false)
   const [index, setIndex] = useState(0)
+
+  const [alertPopup, setAlertPopup] = useState(false)
 
   return (
     <>
@@ -697,7 +687,7 @@ export default function Shop() {
               products.map((product, index)=>{
                 return(
                   <ProductUnit key={index} onClick={() => {
-                    setPopup(true)
+                    setShopPopup(true)
                     setIndex(index)
                   }}>
                     <ProductImageBox>
@@ -749,14 +739,9 @@ export default function Shop() {
           </ProbabilityOuterBox>
 
         </ShopContents>
-        {popup === true ? <ShopPopup setPopup={setPopup} products={products} index={index} /> : null}
+        {shopPopup === true ? <ShopPopup setShopPopup={setShopPopup} products={products} index={index} setAlertPopup={setAlertPopup} alertPopup={alertPopup} /> : null}
       </ShopSection>
     </>
 
   )
 }
-
-
-
-
-
