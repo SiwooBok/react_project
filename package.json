@@ -1,5 +1,5 @@
 {
-  "name": "react_project",
+  "name": "react_pract",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "gh-pages": "^5.0.0",
-    "sass": "^1.57.1",
+    "sass": "^1.58.0",
     "sass-loader": "^13.2.0"
   },
   "homepage": "https://siwoobok.github.io/react_project"
