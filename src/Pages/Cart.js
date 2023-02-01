@@ -6,11 +6,10 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addCount, subCount, deleteItem, calulateTotalPrice } from "./store";
+import { addCount, subCount, deleteItem } from "./store";
 
 
 import AlertPopup from "./AlertPopup";
-import store from "./store";
 
 
 
@@ -66,15 +65,21 @@ const CartSheet = styled.div `
   margin-bottom: 91px;
   border-bottom: 2px solid #fff;
 `
+const CartEmptyUnit = styled.div `
+  width: 100%;
+  height: 200px;
+  font-size: 16px;
+  text-align: center;
+`
 const CartUnit = styled.div `
   width: 100%;
-  height: 300px;
+  height: 210px;
   display: flex;
   margin-bottom: 110px;
 `
 const CartImageBox = styled.div `
-  width: 300px;
-  height: 300px;
+  width: 210px;
+  height: 210px;
   border-radius: 20px;
   overflow: hidden;
   margin-right: 50px;
@@ -84,86 +89,97 @@ const CartImageBox = styled.div `
 const CartImage = styled.img `display: block; width: 100%; height: 100%;`
 
 const CartDescriptionBox = styled.div `
-  width: 320px;
+  width: 450px;
   height: 100%;
-  padding-top: 42px;
+  padding-top: 10px;
   box-sizing: border-box;
 `
 const CartNameBox = styled.div `
   width: 100%;
   height: 50px;
   display: flex;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 50px;
 `
 const CartName = styled.div `width: 150px;`
 const CartQuantity = styled.div `width: calc(100% - 150px); text-indent: 30px;`
 
 const CartPriceBox = styled.div `
-  width: 100%;
+  width: 500px;
   height: 50px;
   display: flex;
-  font-size: 20px;
+  font-size: 17px;
   line-height: 50px;
 `
-const CartPrice = styled.div `width: 163px;`
-const CartPriceValue = styled.div `width: calc(100% - 163px);`
-
+const CartPriceText = styled.div `width: 163px;`
+const CartPriceValueBox = styled.div `width: calc(100% - 163px);;`
+const CartPriceValue = styled.span `margin-right: 15px;`
+const CartPriceMonetary = styled.span `font-size: 14px; vertical-align: 0%;`
 
 
 const CartUnitRightBox = styled.div `
-  width: calc(100% - 300px - 50px - 320px);
-  padding-top: 175px;
+  width: calc(100% - 300px - 50px - 450px);
+  padding-top: 120px;
   box-sizing: border-box;
 `
 const CartRemoveBox = styled.div `
   width: 100%;
   height: 40px;
-  margin-bottom: 38px;
+  margin-bottom: 20px;
 `
 const CartRemoveBtn = styled.button `
-  width: 230px;
-  height: 40px;
-  font-size: 19px;
+  width: 200px;
+  height: 30px;
+  font-size: 16px;
   color: #fff;
   border: 1px solid #fff;
-  border-radius: 40px;
+  border-radius: 30px;
   background-color: transparent;
   text-align: center;
-  line-height: 40px;
+  line-height: 30px;
   cursor: pointer;
+  transition: all .3s;
+  &:hover {
+    color: #fff;
+    background-color: #51859c;
+    border: 1px solid #b5ddee;
+  }
 `
 
 const CartControlBox = styled.div `
   width: 100%;
-  height: 40px;
+  height: 30px;
   display: flex;
 `
 const CartControlText = styled.div `
-  width: calc(100% - 65px - 65px - 65px);
-  height: 40px;
-  font-size: 32px;
+  width: calc(100% - 40px - 40px - 40px);
+  height: 30px;
+  font-size: 20px;
 `
 const CartControlBtn = styled.button `
-  width: 65px;
-  height: 40px;
+  width: 40px;
+  height: 30px;
   display: flex;
-  font-size: 24px;
+  font-size: 20px;
   color: #fff;
   justify-content: center;
   align-items: center;
   border: none;
   background-color: transparent;
   cursor: pointer;
+  transition: all .3s;
+  &:hover {
+    color: #87ceeb;
+  }
 `
-const CartControlMinusBtn = styled(CartControlBtn) `width: 65px;`
-const CartControlPlusBtn = styled(CartControlBtn) `width: 65px;`
+const CartControlMinusBtn = styled(CartControlBtn) `width: 40px;`
+const CartControlPlusBtn = styled(CartControlBtn) `width: 40px;`
 const CartCurrentQuantity = styled.div `
-  width: 65px;
-  height: 40px;
-  font-size: 24px;
+  width: 40px;
+  height: 30px;
+  font-size: 22px;
   text-align: center;
-  line-height: 40px;
+  line-height: 30px;
 `
 
 const TotalOuterBox = styled.div `
@@ -172,7 +188,7 @@ const TotalOuterBox = styled.div `
   display: flex;
   flex-direction: row-reverse;
   margin: 0 auto;
-  margin-bottom: 235px;
+  margin-bottom: 200px;
 `
 const TotalInnerBox = styled.div `
   width: 400px;
@@ -212,9 +228,24 @@ const CartFinalButton = styled.button `
   border-radius: 60px;
   box-sizing: border-box;
   cursor: pointer;
+  transition: all .3s;
 `
-const BtnMoreShopping = styled(CartFinalButton) `width: 260px;`
-const BtnBuyNow = styled(CartFinalButton) `color: #DFFF00; border: 2px solid #DFFF00;`
+const BtnMoreShopping = styled(CartFinalButton) `
+  width: 260px;
+  &:hover {
+    color: #fff;
+    background-color: #51859c;
+    border: 2px solid #87ceeb;
+  }
+`
+const BtnBuyNow = styled(CartFinalButton) `
+  color: #DFFF00;
+  border: 2px solid #DFFF00;
+  &:hover {
+    color: #fff;
+    background-color: #95a52b;
+  }
+`
 
 const CartBottomPadding = styled.div `width: 100%; height: 235px;`
 
@@ -232,7 +263,6 @@ function calculateSumValue(numList) {
         sumValue += targetNumber.price * targetNumber.count;
       }
     })
-  
     let StringifiedPrice = `${sumValue}`;
     let modifiedPriceString = '';
     for(let k=0; k<StringifiedPrice.length; k++) {
@@ -287,7 +317,9 @@ export default function Cart() {
 
           <CartSheet>
             {
-              state.cart.map((item, i) => {
+             sumValue === 0
+             ? <CartEmptyUnit>The Cart is Empty</CartEmptyUnit>
+             : state.cart.map((item, i) => {
                 return (
                   <CartUnit key={i}>
                     <CartImageBox targetGradient={state.cart[i].gradient}>
@@ -299,8 +331,11 @@ export default function Cart() {
                         <CartQuantity>x {state.cart[i].count}</CartQuantity>
                       </CartNameBox>
                       <CartPriceBox>
-                        <CartPrice>Current Price</CartPrice>
-                        <CartPriceValue>{state.cart[i].count*state.cart[i].price}</CartPriceValue>
+                        <CartPriceText>Current Price</CartPriceText>
+                        <CartPriceValueBox>
+                          <CartPriceValue>{state.cart[i].count*state.cart[i].price}</CartPriceValue>
+                          <CartPriceMonetary>ATL Coin</CartPriceMonetary>
+                        </CartPriceValueBox>
                       </CartPriceBox>
                     </CartDescriptionBox>
                     <CartUnitRightBox>
@@ -336,27 +371,37 @@ export default function Cart() {
 
           </CartSheet>
 
-          <TotalOuterBox>
-            <TotalInnerBox>
-              <TotalText>Total</TotalText>
-              <TotalValueBox>
-                <TotalPrice className="spoqa">{sumValue}</TotalPrice>ATL Coin
-              </TotalValueBox>
-            </TotalInnerBox>
-          </TotalOuterBox>
+          {
+             sumValue === 0
+             ? null
+             : <TotalOuterBox>
+                <TotalInnerBox>
+                  <TotalText>Total</TotalText>
+                  <TotalValueBox>
+                    <TotalPrice className="spoqa">{sumValue}</TotalPrice>ATL Coin
+                  </TotalValueBox>
+                </TotalInnerBox>
+             </TotalOuterBox>
+          }
 
-          <ButtonOuterBox className="spoqa">
-            <ButtonInnerBox>
-              <BtnMoreShopping onClick={()=>{navigate('/shop')}}>MORE SHOPPING</BtnMoreShopping>
-              <BtnBuyNow onClick={() => {
-                if (sumValue === 0) {
-                  setAlertPopup(true); setAlertMessage('The cart is empty');
-                } else {
-                  setAlertPopup(true); setAlertMessage('The System is under maintenance');
-                }
-                }}>BUY NOW</BtnBuyNow>
-            </ButtonInnerBox>
-          </ButtonOuterBox>
+          {
+            sumValue === 0
+            ? <ButtonOuterBox className="spoqa">
+                <BtnMoreShopping onClick={()=>{navigate('/shop')}}>MORE SHOPPING</BtnMoreShopping>
+            </ButtonOuterBox>
+            : <ButtonOuterBox className="spoqa">
+                <ButtonInnerBox>
+                  <BtnMoreShopping onClick={()=>{navigate('/shop')}}>MORE SHOPPING</BtnMoreShopping>
+                  <BtnBuyNow onClick={() => {
+                    if (sumValue === 0) {
+                      setAlertPopup(true); setAlertMessage('The cart is empty');
+                    } else {
+                      setAlertPopup(true); setAlertMessage('The System is under maintenance');
+                    }
+                    }}>BUY NOW</BtnBuyNow>
+                </ButtonInnerBox>
+            </ButtonOuterBox>
+          }
 
         </CartContents>
         {alertPopup === true ? <AlertPopup setAlertPopup={setAlertPopup} alertMessage={alertMessage} bg='to top, rgba(20, 20, 20, 0.95), rgba(35, 35, 35, 0.95)' /> : null}

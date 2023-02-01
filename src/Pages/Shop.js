@@ -8,6 +8,8 @@ import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { addItem } from "./store";
 
+import { useNavigate } from 'react-router-dom';
+
 import AlertPopup from "./AlertPopup";
 
 
@@ -69,6 +71,10 @@ const ProductUnit = styled.div `
   height: 455px;
   margin-bottom: 146px;
   cursor: pointer;
+  transition: all .3s;
+  &:hover {
+    filter: drop-shadow(0 0 10px #FC0);
+  }
 `
 
 const ProductImageBox = styled.div `
@@ -581,9 +587,24 @@ const PopupButton = styled.button `
   border-radius: 56px;
   box-sizing: border-box;
   cursor: pointer;
+  transition: all .3s;
 `
-const PopupCartBtn = styled(PopupButton) `margin-right: 50px;`
-const PopupBuyBtn = styled(PopupButton) `color: #DFFF00; border: 2px solid #DFFF00;`
+const PopupCartBtn = styled(PopupButton) `
+  margin-right: 50px;
+  &:hover {
+    color: #fff;
+    background-color: #51859c;
+    border: 2px solid #87ceeb;
+  }
+`
+const PopupBuyBtn = styled(PopupButton) `
+  color: #DFFF00;
+  border: 2px solid #DFFF00;
+  &:hover {
+    color: #fff;
+    background-color: #95a52b;
+  }
+`
 const PopupCloseBtn = styled.div `
   width: 27px;
   height: 27px;
@@ -602,6 +623,7 @@ function ShopPopup(props) {
   const [alertMessage, setAlertMessage] = useState('')
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   return (
     <PopupOuterBox>
@@ -655,11 +677,24 @@ function ShopPopup(props) {
               fontFamily: products[index].fontFamily,
               name: products[index].name,
               price: products[index].price,
-              totalPrice: products[index].totalPrice,
               count: 1
             }))
             }}>CART</PopupCartBtn>
-          <PopupBuyBtn onClick={() => {setAlertPopup(true); setAlertMessage('The System is under maintenance');}}>BUY</PopupBuyBtn>
+          <PopupBuyBtn onClick={() => {
+            dispatch(addItem({
+              id: products[index].id,
+              img: products[index].img,
+              imgName: products[index].imgName,
+              gradient: products[index].gradient,
+              textColor: products[index].textColor,
+              textShadow: products[index].textShadow,
+              fontFamily: products[index].fontFamily,
+              name: products[index].name,
+              price: products[index].price,
+              count: 1
+            }));
+            navigate('/cart');
+            }}>BUY</PopupBuyBtn>
         </PopupButtonBox>
         <PopupCloseBtn onClick={() => setShopPopup(false)}>
           <FontAwesomeIcon icon={faXmark} />
@@ -717,7 +752,7 @@ export default function Shop() {
                       <GetProductName products={products} index={index} />
                     </ProductNameBox>
                     <ProductPriceBox>
-                      <GetProductPrice products={products} index={index} />
+                      <GetProductPrice products={products} index={index} className="price_text" />
                     </ProductPriceBox>
                   </ProductUnit>
                 )

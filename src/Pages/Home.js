@@ -123,7 +123,14 @@ const PromotionSheet = styled.div `
   margin-bottom: 55px;
 `
 
-const PromotionUnit = styled.div `width: 340px;`
+const PromotionUnit = styled.div `
+  width: 340px;
+  border-color: #DCB7B7;
+  transition: color .3s;
+  &:hover {
+    color: rgb(223, 171, 74);
+  }
+`
 
 const PromotionUnit01 = styled(PromotionUnit) `display: block;`
 const PromotionUnit02 = styled(PromotionUnit) `display: block;`
@@ -135,12 +142,18 @@ const CharImageBox = styled.div `
   align-items: center;
   width: 340px;
   height: 340px;
-  border: 1px solid #DCB7B7;
+  border-width: 1px;
+  border-style: solid;
+  border-color: inherit;
   border-radius: 20px;
   box-sizing: border-box;
   position: relative;
+  cursor: pointer;
 `
-const CharImage = styled.img `display:block; width: 70%;`
+const CharImage = styled.img `
+  display:block;
+  width: 70%;
+`
 const CharName = styled.div `width: 100%; height: 112px; text-align: center; line-height: 112px;`
 
 const floatingChar = keyframes `
@@ -188,6 +201,11 @@ const PromotionBtn = styled.button `
   box-sizing: border-box;
   margin: 0 auto;
   cursor: pointer;
+  transition: all .3s;
+  &:hover {
+    color: rgb(223, 171, 74);
+    border: 1px solid rgb(223, 171, 74);
+  }
 `
 
 
@@ -322,19 +340,19 @@ export default function Home() {
         <PromotionSheet>
           <PromotionUnit01>
             <CharImageBox01>
-              <CharImage01 src={process.env.PUBLIC_URL+ '/images/dragon_01.png'} />
+              <CharImage01 src={process.env.PUBLIC_URL+ '/images/dragon_01.png'} onClick={()=>{navigate('/shop')}} />
             </CharImageBox01>
             <CharName01>Lyra</CharName01>
           </PromotionUnit01>
           <PromotionUnit02>
             <CharImageBox02>
-              <CharImage02 src={process.env.PUBLIC_URL+ '/images/dragon_02.png'} />
+              <CharImage02 src={process.env.PUBLIC_URL+ '/images/dragon_02.png'} onClick={()=>{navigate('/shop')}} />
             </CharImageBox02>
             <CharName02>Mickey</CharName02>
           </PromotionUnit02>
           <PromotionUnit03>
             <CharImageBox03>
-              <CharImage03 src={process.env.PUBLIC_URL+ '/images/dragon_03.png'} />
+              <CharImage03 src={process.env.PUBLIC_URL+ '/images/dragon_03.png'} onClick={()=>{navigate('/shop')}} />
             </CharImageBox03>
             <CharName03>Draco</CharName03>
           </PromotionUnit03>
